@@ -32,3 +32,72 @@ test-output.json
 # Misc
 .DS_Store
 *.pem
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# =========================
+# Virtual Environment
+# =========================
+.venv/
+venv/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Type Checking / Lint
+# =========================
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+
+# =========================
+# Build / Distribution
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# SQLAlchemy / SQLite
+# =========================
+*.db
+*.sqlite3
+
+# =========================
+# uv
+# =========================
+.python-version

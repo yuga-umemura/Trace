@@ -13,6 +13,9 @@ migrate:
 revision:
 	cd apps/fit-route && uv run alembic revision --autogenerate -m "$(m)"
 
+seed:
+	cd apps/fit-route && uv run python -m app.infrastructure.db.seed.stores
+
 lint-web:
 	cd apps/fit-route-web && pnpm lint
 
