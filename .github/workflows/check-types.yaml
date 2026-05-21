@@ -23,7 +23,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check types
-        run: pnpm check-types
+        run: pnpm --filter fit-route-web check-types
 
   check-types-api:
     runs-on: ubuntu-latest
