@@ -1,34 +1,37 @@
-FROM public.ecr.aws/docker/library/node:24.15-alpine AS base
-RUN npm install -g corepack
-RUN corepack enable
+FROM public.ecr.aws/docker/library/python:3.13-slim AS base
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir uv
 
 FROM base AS builder
-WORKDIR /app
 
-COPY . .
-RUN pnpm dlx turbo@^2 prune fit-route --docker
+COPY apps/fit-route/pyproject.toml apps/fit-route/uv.lock ./apps/fit-route/
 
-FROM base AS installer
-WORKDIR /app
+WORKDIR /app/apps/fit-route
 
-COPY --from=builder /app/out/json .
-RUN pnpm install --frozen-lockfile
+RUN uv sync --frozen --no-dev
 
-COPY --from=builder /app/out/full .
-RUN pnpm build --filter fit-route
+FROM base AS runner
 
-FROM public.ecr.aws/docker/library/node:24.15-alpine AS runner
-WORKDIR /app
+RUN addgroup --system --gid 1001 app
+RUN adduser --system --uid 1001 --ingroup app app
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 hono
+COPY --from=builder /app/apps/fit-route/.venv /app/apps/fit-route/.venv
+COPY --chown=app:app apps/fit-route/app /app/apps/fit-route/app
+COPY --chown=app:app apps/fit-route/alembic /app/apps/fit-route/alembic
+COPY --chown=app:app apps/fit-route/alembic.ini /app/apps/fit-route/alembic.ini
+COPY --chown=app:app apps/fit-route/pyproject.toml /app/apps/fit-route/pyproject.toml
 
-COPY --from=installer --chown=hono:nodejs /app/apps/fit-route/dist ./apps/fit-route/dist
-COPY --from=installer --chown=hono:nodejs /app/node_modules ./node_modules
-COPY --from=installer --chown=hono:nodejs /app/apps/fit-route/package.json ./apps/fit-route/package.json
+WORKDIR /app/apps/fit-route
 
-USER hono
+ENV PATH="/app/apps/fit-route/.venv/bin:$PATH"
 
-EXPOSE 3001
+USER app
 
-CMD ["node", "apps/fit-route/dist/index.js"]
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

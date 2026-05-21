@@ -10,19 +10,12 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@types/node": "^25.6.0",
     "eslint": "^9.39.4",
     "tsx": "^4.21.0",
-    "turbo": "^2.9.8",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   }

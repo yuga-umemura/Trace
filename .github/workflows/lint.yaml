@@ -7,17 +7,8 @@ on:
       - main
 
 jobs:
-  lint:
+  lint-web:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node_v: [24.x]
-        pnpm_v: [10.26.2]
-        package:
-          - fit-route-web
-          - fit-route
 
     steps:
       - uses: actions/checkout@v6
@@ -28,11 +19,33 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node_v }}
+          node-version: 24.x
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
-        run: pnpm lint
+        run: pnpm --filter fit-route-web lint
+
+  lint-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        working-directory: apps/fit-route
+        run: uv sync --frozen
+
+      - name: Run Ruff
+        working-directory: apps/fit-route
+        run: uv run ruff check app

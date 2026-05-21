@@ -4,17 +4,8 @@ on:
   push:
 
 jobs:
-  check-types:
+  check-types-web:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node_v: [24.x]
-        pnpm_v: [10.26.2]
-        package:
-          - fit-route-web
-          - fit-route
 
     steps:
       - uses: actions/checkout@v6
@@ -25,11 +16,33 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node_v }}
+          node-version: 24.x
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Check types
-        run: pnpm check-types
+        run: pnpm --filter fit-route-web check-types
+
+  check-types-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        working-directory: apps/fit-route
+        run: uv sync --frozen
+
+      - name: Check api types
+        working-directory: apps/fit-route
+        run: uv run mypy app
