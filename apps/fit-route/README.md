@@ -1,20 +1,40 @@
 # Fit Route
 
-Fit Route バックエンドアプリケーション
+Fit Route バックエンドアプリケーション。
 
-## 技術スタック
+---
 
-- Node.js
-- TypeScript
-- Hono
+# 技術スタック
 
-## 開発
+## Backend
 
-```
-pnpm install
-pnpm run dev
-```
+- Python
+- FastAPI
+- SQLAlchemy
+- Alembic
 
-```
-open http://localhost:3001
+## Database
+
+- PostgreSQL
+
+## Machine Learning
+
+- PyTorch
+
+## Development
+
+- uv
+- Ruff
+- mypy
+- pytest
+
+---
+
+# ディレクトリ構成
+
+```txt
+app/
+  core/
+  infrastructure/
+  modules/
 ```
