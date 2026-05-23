@@ -1,13 +1,13 @@
 services:
   postgres:
     image: postgres:16
-    container_name: fit-route-postgres
+    container_name: trace-postgres
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER: fitroute
-      POSTGRES_PASSWORD: fitroute
-      POSTGRES_DB: fitroute
+      POSTGRES_USER: trace
+      POSTGRES_PASSWORD: trace
+      POSTGRES_DB: trace
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

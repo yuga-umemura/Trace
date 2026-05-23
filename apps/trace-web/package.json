@@ -1,11 +1,11 @@
 {
-  "name": "fit-route-web",
+  "name": "trace-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:image": "cd ../../ && docker build . -f apps/fit-route-web/Dockerfile -t ${npm_config_registory}/fit-route-web:${npm_config_tag}",
+    "build:image": "cd ../../ && docker build . -f apps/trace-web/Dockerfile -t ${npm_config_registory}/trace-web:${npm_config_tag}",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
     "check-types": "next typegen && tsc --noEmit"

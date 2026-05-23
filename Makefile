@@ -2,22 +2,22 @@ dev:
 	make -j2 dev-web dev-api
 
 dev-web:
-	cd apps/fit-route-web && pnpm dev
+	cd apps/trace-web && pnpm dev
 
 dev-api:
-	cd apps/fit-route && uv run uvicorn app.main:app --reload --port 8000
+	cd apps/trace && uv run uvicorn app.main:app --reload --port 8000
 
 migrate:
-	cd apps/fit-route && uv run alembic upgrade head
+	cd apps/trace && uv run alembic upgrade head
 
 revision:
-	cd apps/fit-route && uv run alembic revision --autogenerate -m "$(m)"
+	cd apps/trace && uv run alembic revision --autogenerate -m "$(m)"
 
 seed:
-	cd apps/fit-route && uv run python -m app.infrastructure.db.seed.stores
+	cd apps/trace && uv run python -m app.infrastructure.db.seed.stores
 
 lint-web:
-	cd apps/fit-route-web && pnpm lint
+	cd apps/trace-web && pnpm lint
 
 lint-api:
-	cd apps/fit-route && uv run ruff check .
+	cd apps/trace && uv run ruff check .
