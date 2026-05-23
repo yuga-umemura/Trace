@@ -8,7 +8,8 @@
     "build:image": "cd ../../ && docker build . -f apps/trace-web/Dockerfile -t ${npm_config_registory}/trace-web:${npm_config_tag}",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
-    "check-types": "next typegen && tsc --noEmit"
+    "check-types": "next typegen && tsc --noEmit",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "next": "16.2.4",
@@ -22,6 +23,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint-config-next": "16.2.4",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4"
   }
 }
