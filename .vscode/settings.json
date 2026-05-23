@@ -1,5 +1,5 @@
 {
-  "python.defaultInterpreterPath": "apps/fit-route/.venv/bin/python",
+  "python.defaultInterpreterPath": "apps/trace/.venv/bin/python",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
